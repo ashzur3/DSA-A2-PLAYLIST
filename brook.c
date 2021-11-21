@@ -14,8 +14,7 @@ struct playlistType{
     int size, next, mode;
 };
 
-
-int initSize = 2;
+int initSize = 10;
 
 
 /* EFFECTS: allocates and initialises an empty playlist which will play in normal mode.*/
@@ -31,6 +30,7 @@ playlist initialisePlaylist() {
 }
 
 
+//EFFECTS: copies array aux into array Q
 void copy(mysong * aux, mysong * Q, int size) {
     int i;
     for (i=0; i<size; i++) {
@@ -39,6 +39,7 @@ void copy(mysong * aux, mysong * Q, int size) {
 }
 
 
+// EFFECTS: checks whether arrray p->Q needs expanding
 void check(playlist p) {
     if (p->last == p->size - 1) {
         mysong * aux = p->Q;
@@ -76,13 +77,13 @@ int playSong(playlist p) {
     int aux;
     aux = p->next;
     if (p->mode == 1) {
-        if (p->Q[p->next].played == 0) {
+        if (p->Q[p->next].played == 0) { //unplayed
             p->Q[p->next].played = 1;
             p->next = findnext(p);
             return p->Q[aux].tune->id;
         }
 
-        else {
+        else { // already played
             int r;
             int i;
             p->next = findnext(p);
@@ -93,6 +94,7 @@ int playSong(playlist p) {
                     p->next = findnext(p);
                     break;
                 }
+
                 else {
                     r = -1;
                     p->next = findnext(p);
@@ -113,7 +115,7 @@ int playSong(playlist p) {
 
 /* EFFECTS: set p to play from the ith song. I.e., after the call the ith song will be the next song to be played.*/
 void playFrom(playlist p, int i){
-    if (i <= p->last)
+    if (i-1 <= p->last)
         p->next = i - 1;
 }
 
