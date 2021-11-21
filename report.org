@@ -25,7 +25,7 @@ Since we are not removing from the playlist, /first/ is generally unused.
 The playlist struct also contains integers to store the /size/ of the allocated array, the position of the /next/ song to be played, and the /mode/ that the playlist should play in.
 This /mode/ can be adjusted with the function ~skipAllPlayedSongs~ and dictates whether the paylist will automatically skip previously played songs.
 
-* Implementation
+* Implementation of Functions
 
 ** PlaySong
 
@@ -43,7 +43,7 @@ Unfortunately, this can't be improved upon wthout drastic structure changes, as 
 ** PlayFrom
 
 The function *playFrom* takes the playlist /p/ and an integer /i/, representing the position to play from.
-If ~i-1 <= p->last~, the function sets ~p->next~ to /i - 1/.
-I checked /i - 1/ rather than /i/ as the playlist indexes from 0, but the input integer counts from 1.
-Since the playlist is very static and I defined /next/ within the playlist struct, playing from any given position is relatively simple.
-This function has complexity O(1).
+If ~i-1 <= p->last~, the function sets ~p->next~ to /i - 1/, meaning /i - 1/ will be played next.
+I check /i - 1/ rather than /i/ as the playlist indexes from 0, but the input integer counts from 1, as a human normally would.
+Since the playlist is very static and I defined the variable /next/ within the playlist struct, playing from any given position is relatively simple.
+This function has constant complexity O(1), as the size of the playlist does not affect the runtime.

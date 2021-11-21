@@ -1,4 +1,4 @@
-% Created 2021-11-21 Sun 12:28
+% Created 2021-11-21 Sun 23:24
 % Intended LaTeX compiler: pdflatex
 \documentclass[11pt]{article}
 \usepackage[utf8]{inputenc}
@@ -30,10 +30,10 @@
 \maketitle
 
 \section{Data Structures}
-\label{sec:org1d57472}
+\label{sec:org179905e}
 
 \subsection{MySong}
-\label{sec:org8a0d256}
+\label{sec:orgdbdd6a5}
 
 Firstly, I implemented a new struct to store a song, which can hold both a song \emph{tune} and an int \emph{played}.
 The \emph{song} struct is defined in the playlist.h interface, and contains an int \emph{id}, a char* \emph{title}, and a float \emph{duration}.
@@ -41,7 +41,7 @@ Since we are working with interfaces, I cannot alter the orginal song structure 
 As such, my playlist stores an array of \emph{mysong} rather than the original \emph{song}.
 
 \subsection{Playlist}
-\label{sec:org7dd76dc}
+\label{sec:org7dc4e0b}
 
 I defined another struct to store the playlist of songs, as well as some other values to keep track of the playlist functions.
 I chose to implement the playlist as a queue-style dynamic array, as items within it can be efficiently added and accessed. 
@@ -54,11 +54,11 @@ Since we are not removing from the playlist, \emph{first} is generally unused.
 The playlist struct also contains integers to store the \emph{size} of the allocated array, the position of the \emph{next} song to be played, and the \emph{mode} that the playlist should play in.
 This \emph{mode} can be adjusted with the function \texttt{skipAllPlayedSongs} and dictates whether the paylist will automatically skip previously played songs.
 
-\section{Implementation}
-\label{sec:orgd9e7520}
+\section{Implementation of Functions}
+\label{sec:org9179c6b}
 
 \subsection{PlaySong}
-\label{sec:orgba5a591}
+\label{sec:org6bbe317}
 
 The function \textbf{playSong} takes a playlist as input and returns the id of the next song to be played.
 If \texttt{p->mode == 0}, the function sets the \emph{played} variable attached to the specific \emph{mysong} to 1, showing that the song has been played. 
@@ -72,11 +72,11 @@ When in mode 1, the worst case complexity is O(n), as the function may have to s
 Unfortunately, this can't be improved upon wthout drastic structure changes, as the playlist isn't sorted so binary search cannot be implemented.
 
 \subsection{PlayFrom}
-\label{sec:orgd74d7a9}
+\label{sec:orgc2230d7}
 
 The function \textbf{playFrom} takes the playlist \emph{p} and an integer \emph{i}, representing the position to play from.
-If \texttt{i-1 <= p->last}, the function sets \texttt{p->next} to \emph{i - 1}.
-I checked \emph{i - 1} rather than \emph{i} as the playlist indexes from 0, but the input integer counts from 1.
-Since the playlist is very static and I defined \emph{next} within the playlist struct, playing from any given position is relatively simple.
-This function has complexity O(1).
+If \texttt{i-1 <= p->last}, the function sets \texttt{p->next} to \emph{i - 1}, meaning \emph{i - 1} will be played next.
+I check \emph{i - 1} rather than \emph{i} as the playlist indexes from 0, but the input integer counts from 1, as a human normally would.
+Since the playlist is very static and I defined the variable \emph{next} within the playlist struct, playing from any given position is relatively simple.
+This function has constant complexity O(1), as the size of the playlist does not affect the runtime.
 \end{document}
